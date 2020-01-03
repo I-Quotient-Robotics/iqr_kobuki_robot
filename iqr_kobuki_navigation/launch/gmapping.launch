@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="log_type" default="screen"/>
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping_node" respawn="false" output="$(arg log_type)">
+    <rosparam file="$(find iqr_kobuki_navigation)/config/gmapping.yaml" command="load" />
+    <remap from="scan" to="scan"/>
+  </node>
+
+</launch>

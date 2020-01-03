@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="iqr_kobuki_robot">
+  <xacro:include filename="$(find iqr_kobuki_description)/urdf/zed.xacro"/>
+  <xacro:include filename="$(find iqr_kobuki_description)/urdf/vlp16.xacro"/>
+  <xacro:include filename="$(find kobuki_description)/urdf/kobuki.urdf.xacro" />
+  <kobuki/>
+
+  <!-- support -->
+  <link name="support_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iqr_kobuki_description/meshes/turtlebot_support.stl"/>
+        </geometry>
+        <material name="">
+          <color rgba="0.3 0.3 0.3 1"/>
+        </material>
+      </visual>
+  </link>
+
+  <joint name="support_link_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base_footprint"/>
+      <child link="support_link"/>
+  </joint>
+
+  <!-- JY901 -->
+  <link name="imu_link"/>  
+  <joint name="imu_link_joint" type="fixed">
+      <origin xyz="0 0 0.123" rpy="0 0 0" />
+      <parent link="base_footprint"/>
+      <child link="imu_link"/>
+  </joint>
+  <!-- VLP-16 lidar -->
+  <xacro:vlp16 package="iqr_kobuki_description" parent="base_footprint">
+    <origin xyz="-0.005 0 0.3438" rpy="0 0 0" />
+  </xacro:vlp16>
+
+  <!-- ZED Camera -->
+  <xacro:zed package="iqr_kobuki_description" parent="base_footprint">
+    <origin xyz="0.119 0 0.278" rpy="0 0 0" />
+  </xacro:zed>
+  </robot>
